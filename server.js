@@ -13,6 +13,8 @@ const db = require('./config/keys').mongoURI;
 mongoose.connect(db)
 .then(() => console.log("MongoDb connected"))
 .catch((err) => console.log(err));
+// recognize the incoming Request Object as a JSON Object
+app.use(express.json())
 
 // Use Routes
 app.use('/api/users', users);
