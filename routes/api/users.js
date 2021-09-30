@@ -3,7 +3,8 @@ const router = express.Router();
 const User = require('../../models/User')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
-
+const jwt = require('jsonwebtoken')
+const secret = require('../../config/keys').secretOrPrivateKey
 // GET USERS
 router.get('/', (req, res) => {
     res.json({'msg': "users"})
@@ -29,7 +30,7 @@ router.post('/register', (req, res) => {
                 bcrypt.hash(req.body.password, salt, (err, hash) => {
                     if (err) throw err;
                     newUser.password = hash;
-                    
+
                     newUser.save()
                     .then((user)=> res.json({'msg': user}))
                     .catch((err) => res.json({'error': err}))
@@ -45,7 +46,7 @@ router.post('/login', (req, res)=> {
     const { email, password } = req.body;
     // Find user by Email
     User.findOne({ email })
-    .then((user)=> {
+    .then((user) => {
         if (!user)
             return res.status(404).json({email: 'email not found'})
         // Check password
@@ -53,7 +54,12 @@ router.post('/login', (req, res)=> {
         .then ((match)=> {
             if (!match)
                 return res.status(400).json({password: 'password incorrect'})
-            res.json({msg: 'success'})
+            // User Matched
+            const payload = {id: user.id, username: user.username, avatar: user.avatar}
+            // Sign token
+            jwt.sign(payload, secret, {expiresIn: 3600}, (err, token) => {
+                res.json({msg: "success", token: 'Bearer ' + token})
+            })
         })
         .catch((err) => console.log(err))
     })
