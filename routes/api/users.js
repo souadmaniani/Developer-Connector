@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     res.json({'msg': "users"})
 })
 
-// REGISTER USER
+// REGISTER A USER
 router.post('/register', (req, res) => {
     User.findOne({email: req.body.email})
     .then((user) => {
@@ -23,20 +23,41 @@ router.post('/register', (req, res) => {
                 password: req.body.password,
                 avatar: avatar
             })
+
             bcrypt.genSalt(10, (err, salt) => {
                 if (err) throw err;
                 bcrypt.hash(req.body.password, salt, (err, hash) => {
                     if (err) throw err;
                     newUser.password = hash;
+                    
+                    newUser.save()
+                    .then((user)=> res.json({'msg': user}))
+                    .catch((err) => res.json({'error': err}))
                 });
             });
-            newUser.save()
-            .then((user)=> res.json({'msg':user}))
-            .catch((err) => res.json({'error': err}))
         }
-
     })
     .catch((err) => console.log(err));
+})
+
+// USER LOGIN / return a token
+router.post('/login', (req, res)=> {
+    const { email, password } = req.body;
+    // Find user by Email
+    User.findOne({ email })
+    .then((user)=> {
+        if (!user)
+            return res.status(404).json({email: 'email not found'})
+        // Check password
+        bcrypt.compare(password, user.password)
+        .then ((match)=> {
+            if (!match)
+                return res.status(400).json({password: 'password incorrect'})
+            res.json({msg: 'success'})
+        })
+        .catch((err) => console.log(err))
+    })
+    .catch((err) => console.log(err))
 })
 
 module.exports = router
