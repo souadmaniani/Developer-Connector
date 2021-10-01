@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const users = require('./routes/api/users')
 const profil = require('./routes/api/profil')
 const posts = require('./routes/api/posts')
+const passport = require('passport')
 
 const app = express()
 
@@ -13,8 +14,14 @@ const db = require('./config/keys').mongoURI;
 mongoose.connect(db)
 .then(() => console.log("MongoDb connected"))
 .catch((err) => console.log(err));
-// recognize the incoming Request Object as a JSON Object
+
 app.use(express.json())
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require('./config/passport')(passport);
 
 // Use Routes
 app.use('/api/users', users);

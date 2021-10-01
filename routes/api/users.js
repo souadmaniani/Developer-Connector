@@ -4,7 +4,8 @@ const User = require('../../models/User')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const secret = require('../../config/keys').secretOrPrivateKey
+const secret = require('../../config/keys').secretOrKey
+const passport = require('passport')
 // GET USERS
 router.get('/', (req, res) => {
     res.json({'msg': "users"})
@@ -64,6 +65,12 @@ router.post('/login', (req, res)=> {
         .catch((err) => console.log(err))
     })
     .catch((err) => console.log(err))
+})
+
+// PRIVATE ROUTE
+router.get('/test' , passport.authenticate('jwt', { session: false }), (req , res)=>{
+   res.send(req.user)
+
 })
 
 module.exports = router
