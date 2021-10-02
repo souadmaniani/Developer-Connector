@@ -6,6 +6,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const secret = require('../../config/keys').secretOrKey
 const passport = require('passport')
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
+
+
 // GET USERS
 router.get('/', (req, res) => {
     res.json({'msg': "users"})
@@ -13,10 +17,19 @@ router.get('/', (req, res) => {
 
 // REGISTER A USER
 router.post('/register', (req, res) => {
+
+    // Validation
+    const { Errors, isValid } = validateRegisterInput(req.body);
+    if (!isValid)
+        return (res.status(404).json(Errors));
+    
     User.findOne({email: req.body.email})
     .then((user) => {
         if (user)
-            res.status(404).json({"email: ": "email Exists"})
+        {
+            Errors.email = "Email already exists"
+            res.status(404).json(Errors)
+        }
         else {
             const avatar =  gravatar.url(req.body.email,  {s: '200', r: 'pg', d: '404'})
             const newUser = new User({
@@ -44,12 +57,21 @@ router.post('/register', (req, res) => {
 
 // USER LOGIN / return a token
 router.post('/login', (req, res)=> {
+
+    // Validation
+    const { Errors, isValid } = validateLoginInput(req.body);
+    if (!isValid)
+        return (res.status(404).json(Errors));
+
     const { email, password } = req.body;
     // Find user by Email
     User.findOne({ email })
     .then((user) => {
         if (!user)
-            return res.status(404).json({email: 'email not found'})
+        {
+            Errors.email = 'email not found';
+            return res.status(404).json(Errors)
+        }
         // Check password
         bcrypt.compare(password, user.password)
         .then ((match)=> {
@@ -69,7 +91,7 @@ router.post('/login', (req, res)=> {
 
 // PRIVATE ROUTE
 router.get('/test' , passport.authenticate('jwt', { session: false }), (req , res)=>{
-   res.send(req.user)
+   res.send(req.user._id)
 
 })
 
