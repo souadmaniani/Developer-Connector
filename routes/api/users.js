@@ -19,16 +19,16 @@ router.get('/', (req, res) => {
 router.post('/register', (req, res) => {
 
     // Validation
-    const { Errors, isValid } = validateRegisterInput(req.body);
+    const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid)
-        return (res.status(404).json(Errors));
+        return (res.status(404).json(errors));
     
     User.findOne({email: req.body.email})
     .then((user) => {
         if (user)
         {
-            Errors.email = "Email already exists"
-            res.status(404).json(Errors)
+            errors.email = "Email already exists"
+            res.status(404).json(errors)
         }
         else {
             const avatar =  gravatar.url(req.body.email,  {s: '200', r: 'pg', d: '404'})
@@ -46,8 +46,8 @@ router.post('/register', (req, res) => {
                     newUser.password = hash;
 
                     newUser.save()
-                    .then((user)=> res.json({'msg': user}))
-                    .catch((err) => res.json({'error': err}))
+                    .then((user)=> res.json(user))
+                    .catch((err) => res.json(err))
                 });
             });
         }
@@ -59,9 +59,9 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res)=> {
 
     // Validation
-    const { Errors, isValid } = validateLoginInput(req.body);
+    const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid)
-        return (res.status(404).json(Errors));
+        return (res.status(404).json(errors));
 
     const { email, password } = req.body;
     // Find user by Email
@@ -69,19 +69,22 @@ router.post('/login', (req, res)=> {
     .then((user) => {
         if (!user)
         {
-            Errors.email = 'email not found';
-            return res.status(404).json(Errors)
+            errors.email = 'Email not found';
+            return res.status(404).json(errors)
         }
         // Check password
         bcrypt.compare(password, user.password)
         .then ((match)=> {
             if (!match)
-                return res.status(400).json({password: 'password incorrect'})
+            {
+                errors.password = 'Password incorrect'
+                return res.status(400).json(errors)
+            }
             // User Matched
             const payload = {id: user.id, username: user.username, avatar: user.avatar}
             // Sign token
             jwt.sign(payload, secret, {expiresIn: 3600}, (err, token) => {
-                res.json({msg: "success", token: 'Bearer ' + token})
+                res.json({success: true, token: 'Bearer ' + token})
             })
         })
         .catch((err) => console.log(err))
@@ -91,7 +94,7 @@ router.post('/login', (req, res)=> {
 
 // PRIVATE ROUTE
 router.get('/test' , passport.authenticate('jwt', { session: false }), (req , res)=>{
-   res.send(req.user._id)
+   res.send(req.user.id)
 
 })
 
