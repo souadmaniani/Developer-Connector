@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router';
-import { loginUser } from '../../redux/actions/userAction';
-import InputGroup from '../common/inputGroup'
+import { loginUser } from '../../redux/actions/authAction';
+import InputGroup from '../common/inputGroup';
 
 const Login = () => {
 	const {auth, errors} = useSelector(state => state);

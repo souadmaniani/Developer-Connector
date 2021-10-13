@@ -1,13 +1,14 @@
 import './App.css';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
-import { logoutUser, setCurrentUser } from './redux/actions/userAction';
+import { logoutUser, setCurrentUser } from './redux/actions/authAction';
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import NavBar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import Dashboard from './components/dashboard/Dashboard'
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
@@ -40,6 +41,7 @@ function App() {
 							<Route exact path="/Login"><Login /></Route>
 							<Route exact path="/Register"><Register /></Route>
 						</div>
+						<Route exact path="/dashboard"><Dashboard /></Route>
 					</div>
 					<Footer />
 			</Router>

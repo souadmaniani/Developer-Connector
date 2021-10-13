@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { registerUser } from '../../redux/actions/userAction';
+import { registerUser } from '../../redux/actions/authAction';
 import { useDispatch, useSelector } from 'react-redux';
 import InputGroup from '../common/inputGroup';
 
