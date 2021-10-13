@@ -4,15 +4,15 @@ const validator = require('validator')
 module.exports = validateRegisterInput = (data) => {
     const errors ={};
     
-    data.username = isEmpty(data.username) ? '' : data.username;
+    data.name = isEmpty(data.name) ? '' : data.name;
     data.email = isEmpty(data.email) ? '' : data.email;
     data.password = isEmpty(data.password) ? '' : data.password;
-    data.passwordConfirm = isEmpty(data.passwordConfirm) ? '' : data.passwordConfirm;
+    data.password2 = isEmpty(data.password2) ? '' : data.password2;
 
-    if (validator.isEmpty(data.username))
-        errors.username = "Username is required"
-    else  if (!validator.isLength(data.username, {min: 2, max: 30}))
-    errors.username = "Username must be between 2 and 30 characters";
+    if (validator.isEmpty(data.name))
+        errors.name = " Name is required"
+    else  if (!validator.isLength(data.name, {min: 2, max: 30}))
+    errors.name = "Name must be between 2 and 30 characters";
     
     if (validator.isEmpty(data.email))
         errors.email = "Email is required"
@@ -24,10 +24,10 @@ module.exports = validateRegisterInput = (data) => {
     else if (!validator.isLength(data.password, {min: 8, max: 16}))
         errors.password = "Password must be 8-16 characters long";
 
-    if (validator.isEmpty(data.passwordConfirm))
-        errors.passwordConfirm = "Password confirm is required"
-    else if (!validator.equals(data.passwordConfirm, data.password))
-        errors.passwordConfirm = "Password does not match"; 
+    if (validator.isEmpty(data.password2))
+        errors.password2 = "Password confirm is required"
+    else if (!validator.equals(data.password2, data.password))
+        errors.password2 = "Password does not match"; 
 
     return (
         {

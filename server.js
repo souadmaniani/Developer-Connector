@@ -4,6 +4,7 @@ const users = require('./routes/api/users')
 const profile = require('./routes/api/profile')
 const posts = require('./routes/api/posts')
 const passport = require('passport')
+const cors = require('cors')
 const app = express()
 
 // DB config
@@ -14,6 +15,7 @@ mongoose.connect(db)
 .then(() => console.log("MongoDb connected"))
 .catch((err) => console.log(err));
 
+app.use(cors())
 app.use(express.json())
 
 // Passport middleware

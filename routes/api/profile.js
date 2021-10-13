@@ -10,7 +10,7 @@ const validateEducationInput = require('../../validation/education')
 router.get('/handle/:handle', (req, res)=> {
     const errors = {}
     Profile.findOne({handle: req.params.handle})
-    .populate('user', ['username', 'avatar'])
+    .populate('user', ['name', 'avatar'])
     .then((profile)=> {
         if (!profile) {
             errors.noprofile = "There is no profile for this user";
@@ -25,7 +25,7 @@ router.get('/handle/:handle', (req, res)=> {
 router.get('/user/:id', (req, res)=> {
     const errors = {}
     Profile.findOne({user: req.params.id})
-    .populate('user', ['username', 'avatar'])
+    .populate('user', ['name', 'avatar'])
     .then((profile)=> {
         if (!profile) {
             errors.noprofile = "There is no profile";
@@ -41,7 +41,7 @@ router.get('/all', (req, res)=> {
     const errors = {}
 
     Profile.find({})
-    .populate('user', ['username', 'avatar'])
+    .populate('user', ['name', 'avatar'])
     .then((profiles)=> {
         if (!profiles) {
             errors.noprofile = "There are no profiles";
@@ -57,7 +57,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
     const errors = {};
 
     Profile.findOne({user: req.user.id})
-    .populate('user', ['username', 'avatar'])
+    .populate('user', ['name', 'avatar'])
     .then((profile)=> {
         if (!profile)
         {
@@ -88,7 +88,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     if (typeof req.body.skills !== 'undefined')
         profileFields.skills = req.body.skills.split(',');
     if (req.body.bio) profileFields.bio = req.body.bio;
-    if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
+    if (req.body.githubname) profileFields.githubname = req.body.githubname;
     profileFields.social = {};
     if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
     if (req.body.twitter) profileFields.social.twitter = req.body.twitter;

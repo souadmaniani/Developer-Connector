@@ -33,7 +33,7 @@ router.post('/register', (req, res) => {
         else {
             const avatar =  gravatar.url(req.body.email,  {s: '200', r: 'pg', d: '404'})
             const newUser = new User({
-                username: req.body.username,
+                name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
                 avatar: avatar
@@ -81,7 +81,7 @@ router.post('/login', (req, res)=> {
                 return res.status(400).json(errors)
             }
             // User Matched
-            const payload = {id: user.id, username: user.username, avatar: user.avatar}
+            const payload = {id: user.id, name: user.name, avatar: user.avatar}
             // Sign token
             jwt.sign(payload, secret, {expiresIn: 3600}, (err, token) => {
                 res.json({success: true, token: 'Bearer ' + token})
