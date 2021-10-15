@@ -2,15 +2,18 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../redux/actions/authAction';
+import { clearCurrentProfile } from '../../redux/actions/profileAction'
 
 const Navbar = () => {
 	const history = useHistory();
     const {isAuthentified, user} = useSelector(state => state.auth);
 	const dispatch = useDispatch();
+
     const onLogoutClick = (e)=>{
-      e.preventDefault();
+      	e.preventDefault();
+		dispatch(clearCurrentProfile());
     	dispatch(logoutUser());
-		history.push('/login')
+		history.push('/login');
     }
     const authLinks = (
         <ul className="navbar-nav ml-auto">

@@ -10,7 +10,6 @@ opts.secretOrKey = require('./keys').secretOrKey;
 module.exports = (passport) => {
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
         // passport callback function
-        console.log("The passport callback function called");
         User.findOne({_id: jwt_payload.id})
         .then((user)=> {
             if (user)
@@ -19,7 +18,6 @@ module.exports = (passport) => {
                 return done(null, false);
         })
         .catch((err) => {
-            console.log("error hapenend");
             return done(err, false);
         })
     }))

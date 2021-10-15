@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { registerUser } from '../../redux/actions/authAction';
 import { useDispatch, useSelector } from 'react-redux';
-import InputGroup from '../common/inputGroup';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 const Register = () => {
 	const { errors } = useSelector(state=> state);
@@ -38,7 +38,7 @@ const Register = () => {
 				Create your DevConnector account
 			  </p>
 			  <form onSubmit={onSubmit}>
-				<InputGroup
+				<TextFieldGroup
 					type="text"
 					error={errors.name}
 					placeholder="Name"
@@ -46,7 +46,7 @@ const Register = () => {
 					value={allValues.name}
 					onChange={onChange}
 				/>
-				<InputGroup
+				<TextFieldGroup
 					type="email"
 					error={errors.email}
 					placeholder="Email Address"
@@ -56,7 +56,7 @@ const Register = () => {
 					a Gravatar email"
 					onChange={onChange}
 				/>
-				<InputGroup
+				<TextFieldGroup
 					type="password"
 					error={errors.password}
 					placeholder="Password"
@@ -64,7 +64,7 @@ const Register = () => {
 					value={allValues.password}
 					onChange={onChange}
 				/>
-				<InputGroup
+				<TextFieldGroup
 					type="password"
 					error={errors.password2}
 					placeholder="Confirm Password"

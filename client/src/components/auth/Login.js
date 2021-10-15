@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router';
 import { loginUser } from '../../redux/actions/authAction';
-import InputGroup from '../common/inputGroup';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 const Login = () => {
 	const {auth, errors} = useSelector(state => state);
@@ -39,7 +39,7 @@ const Login = () => {
                 Sign in to your DevConnector account
               </p>
               <form onSubmit={onSubmit}>
-			  	<InputGroup
+			  	<TextFieldGroup
 					type="email"
 					error={errors.email}
 					placeholder="Email Address"
@@ -47,7 +47,7 @@ const Login = () => {
 					value={allValues.email}
 					onChange={onChange}
 				/>
-                <InputGroup
+          <TextFieldGroup
 					type="password"
 					error={errors.password}
 					placeholder="password"

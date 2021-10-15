@@ -2,7 +2,7 @@ import './App.css';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { logoutUser, setCurrentUser } from './redux/actions/authAction';
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Switch,  Route, useHistory } from "react-router-dom";
 import NavBar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
@@ -11,6 +11,9 @@ import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard'
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { clearCurrentProfile } from './redux/actions/profileAction';
+import PrivateRoute from './components/common/PrivateRoute';
+import CreateProfile from './components/create-profile/CreateProfile'
 
 function App() {
 	const  history = useHistory();
@@ -20,7 +23,9 @@ function App() {
 		// Decode token to get user data
 		const decoded = jwt_decode(localStorage.jwttoken);
 		// Set current user
-		store.dispatch(setCurrentUser(decoded))
+		store.dispatch(setCurrentUser(decoded));
+		// Clear current profile
+		store.dispatch(clearCurrentProfile());
 		// Check for expired token
 		const currentTime = Date.now() / 1000;
 		if (decoded.exp < currentTime) {
@@ -38,10 +43,13 @@ function App() {
 						<NavBar />
 						<Route exact path="/"><Landing /></Route>
 						<div className="container">
-							<Route exact path="/Login"><Login /></Route>
-							<Route exact path="/Register"><Register /></Route>
+							<Route  exact path="/Login"><Login /></Route>
+							<Route  exact path="/Register"><Register /></Route>
 						</div>
-						<Route exact path="/dashboard"><Dashboard /></Route>
+						<Switch>
+							<PrivateRoute exact path="/dashboard" component={Dashboard} />
+							<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+						</Switch>
 					</div>
 					<Footer />
 			</Router>

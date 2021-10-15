@@ -6,21 +6,26 @@ let initialState = {
 
 export const profileReducer = (state = initialState, { type, payload })=> {
     switch(type) {
+        case ActionTypes.PROFILE_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
         case ActionTypes.GET_PROFILE:
             return {
                 ...state,
                 profile: payload,
                 loading: false
             } 
-        case ActionTypes.PROFILE_LOADING:
-            return {
-                ...state,
-                loading: true
-            }
         case ActionTypes.CLEAR_CURRENT_PROFILE:
             return {
                 ...state,
                 profile: null
+            }
+        case ActionTypes.CREATE_PROFILE:
+            return {
+                ...state,
+                profile: payload
             }
         // case ActionTypes.PROFILE_NOT_FOUND:
         //     return {

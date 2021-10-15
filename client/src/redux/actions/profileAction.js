@@ -4,24 +4,22 @@ import axios from 'axios';
 // GET_PROFILE
 export const getCurrentProfile = () => dispatch => {
 	dispatch(setProfileLoading());
-	axios.get("http://localhost:5000/api/profile")
+	axios.get(process.env.REACT_APP_PROFILE_ENDPOINT)
 	.then((res)=> {
-		console.log("RES====> ", res);
 		dispatch({
 			type: ActionTypes.GET_PROFILE,
 			payload: res.data
 		})
 	})
-	.catch((err)=> {
-		console.log("err===>",err);
-		return {
+	.catch(()=> {
+		dispatch({
 			type: ActionTypes.GET_PROFILE,
 			payload: {}
-		}
+		})
 	})
 }
 
-// pRODILE LOADING
+// PROFILE LOADING
 export const setProfileLoading = () => {
     return ({
 		type: ActionTypes.PROFILE_LOADING,
@@ -34,7 +32,40 @@ export const clearCurrentProfile = () => {
 		type: ActionTypes.CLEAR_CURRENT_PROFILE
 	})
 }
-// // GET_PROFILE
+
+// CREATE PROFILE
+export const createProfile = (profileData, history) => dispatch => {
+	axios.post(process.env.REACT_APP_PROFILE_ENDPOINT, profileData)
+	.then(()=> history.push('/dashboard'))
+	.catch((err) => {
+		dispatch( {
+			type: ActionTypes.GET_ERRORS,
+			payload: err.response.data
+		})
+	})
+}
+
+// DELETE ACCOUNT
+export const deleteAccount = () => dispatch => {
+	if (window.confirm('Are you sure, You want delete the item ?')) {
+
+		axios.delete(process.env.REACT_APP_PROFILE_ENDPOINT)
+		.then(()=> {
+			dispatch({
+				type: ActionTypes.SET_CURRENT_USER,
+				payload: {}
+			})
+		})
+		.catch((err) => {
+			dispatch( {
+				type: ActionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		})
+	}
+}
+
+// profileNotFound
 // export const profileNotFound = () => dispatch => {
      
 // }
