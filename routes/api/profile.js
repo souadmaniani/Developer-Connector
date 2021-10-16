@@ -184,22 +184,25 @@ router.delete('/experience/:exp_id',  passport.authenticate('jwt', {session: fal
     .then((profile)=> {
         if (profile) {
             // Get remove index
-            const removeIndex = profile.experience.indexOf(req.params.exp_id);
+            const removeIndex = profile.experience.findIndex((elem) => elem._id.toString() === req.params.exp_id);
             // Delete Experience
+            console.log(removeIndex);
             profile.experience.splice(removeIndex, 1);
             // Profile Save
             profile.save().then((profile)=> res.json(profile))
+            .catch((err)=> res.status(404).json(err))
         }
     })
+    .catch((err)=> res.status(404).json(err))
 })
 
 // Delete education
-router.delete('/education/:exp_id',  passport.authenticate('jwt', {session: false}),(req, res)=>{
+router.delete('/education/:edu_id',  passport.authenticate('jwt', {session: false}),(req, res)=>{
     Profile.findOne({user: req.user.id})
     .then((profile)=> {
         if (profile) {
             // Get remove index
-            const removeIndex = profile.education.indexOf(req.params.exp_id);
+            const removeIndex = profile.education.findIndex((elem) => elem._id.toString() === req.params.edu_id);
             // Delete Education
             profile.education.splice(removeIndex, 1);
             // Profile Save

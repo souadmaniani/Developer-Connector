@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentProfile, deleteAccount } from '../../redux/actions/profileAction';
 import Spinner from '../common/Spinner';
-import ProfileActions from './ProfileActions'
+import ProfileActions from './ProfileActions';
+import Experience from './Experience';
+import Education from './Education';
 
 const Dashboard = () => {
     const  state = useSelector(state => state);
@@ -33,8 +35,8 @@ const Dashboard = () => {
 					</p>
 					<ProfileActions />
           {/* ADD EXP EDUC */}
-					{/* <Experience experience={profile.experience} />
-					<Education education={profile.education} /> */}
+					<Experience experience={profile.experience} />
+					<Education education={profile.education} />
 					<div style={{ marginBottom: '60px' }} />
             <button
               onClick={onDeleteClick}

@@ -16,6 +16,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-experience-education/add-experience';
+import AddEducation from './components/add-experience-education/add-education';
 
 function App() {
 	const  history = useHistory();
@@ -34,10 +35,12 @@ function App() {
 			// Log out user
 			store.dispatch(logoutUser());
 	 		// Redirect to Login
+			 console.log('====================================')
+			 console.log(history)
+			 console.log('====================================')
 			history.push('/login');
 		}
 	}
-
   return (
 	  <Provider	store={ store }>
 			<Router>
@@ -59,6 +62,9 @@ function App() {
 						</Switch>
 						<Switch>
 							<PrivateRoute exact path="/add-experience" component={AddExperience} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/add-education" component={AddEducation} />
 						</Switch>
 					</div>
 					<Footer />

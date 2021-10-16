@@ -35,7 +35,6 @@ const  EditProfile = () => {
 
 	useEffect(() => {
 		if (profile.profile) {
-			console.log("Profile: ", profile.profile)
 			const exProfile = profile.profile;
 			const Skills = exProfile.skills.join(',');
 			exProfile.handle = isEmpty(exProfile.handle) ? '' : exProfile.handle;
