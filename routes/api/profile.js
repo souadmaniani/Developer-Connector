@@ -145,6 +145,7 @@ router.post('/experience', passport.authenticate('jwt', {session: false}), (req 
             profile.save().then((profile)=> res.json(profile))
             .catch((err)=> res.status(404).json(err))
         }
+        
     })
     .catch((err)=> res.status(404).json(err))
 })

@@ -13,7 +13,9 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { clearCurrentProfile } from './redux/actions/profileAction';
 import PrivateRoute from './components/common/PrivateRoute';
-import CreateProfile from './components/create-profile/CreateProfile'
+import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/edit-profile/EditProfile';
+import AddExperience from './components/add-experience-education/add-experience';
 
 function App() {
 	const  history = useHistory();
@@ -48,7 +50,15 @@ function App() {
 						</div>
 						<Switch>
 							<PrivateRoute exact path="/dashboard" component={Dashboard} />
+						</Switch>
+						<Switch>
 							<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/edit-profile" component={EditProfile} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/add-experience" component={AddExperience} />
 						</Switch>
 					</div>
 					<Footer />

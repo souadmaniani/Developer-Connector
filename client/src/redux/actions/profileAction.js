@@ -47,6 +47,33 @@ export const createProfile = (profileData, history) => (dispatch) => {
     });
 };
 
+// ADD EXPERIENCE
+export const addExperience = (expData, history) => (dispatch) => {
+  axios
+    .post(process.env.REACT_APP_EXPERIENCE_ENDPOINT, expData)
+    .then(() => history.push("/dashboard"))
+    .catch((err) => {
+		console.log(err)
+      dispatch({
+        type: ActionTypes.GET_ERRORS,
+        payload: {},
+      });
+    });
+};
+
+// ADD EDUCATION
+export const addEducation = (expData, history) => (dispatch) => {
+  axios
+    .post(process.env.REACT_APP_EDUCATION_ENDPOINT, expData)
+    .then(() => history.push("/dashboard"))
+    .catch((err) => {
+      dispatch({
+        type: ActionTypes.GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
 // DELETE ACCOUNT
 export const deleteAccount = () => (dispatch) => {
   if (window.confirm("Are you sure, You want delete the item ?")) {
