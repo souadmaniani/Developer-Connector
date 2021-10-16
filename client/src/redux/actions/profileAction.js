@@ -129,6 +129,25 @@ export const deleteAccount = () => (dispatch) => {
   }
 };
 
+// GET PROFILES
+export const getProfiles = () => (dispatch) => {
+  dispatch(setProfileLoading());
+  axios
+    .get(process.env.REACT_APP_PROFILES_ENDPOINT)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_PROFILES,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ActionTypes.GET_PROFILES,
+        payload: {},
+      });
+    });
+};
+
 // profileNotFound
 // export const profileNotFound = () => dispatch => {
 

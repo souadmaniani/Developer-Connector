@@ -10,7 +10,7 @@ const Experience = () => {
 		dispatch(deleteExperience(id));
 	}
 
-  	const experience = profile.profile.experience.map((exp) => (
+  	const experience = profile?.profile.experience.map((exp) => (
 		<tr key={exp._id}>
 		<td>{exp.company}</td>
 		<td>{exp.title}</td>

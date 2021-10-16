@@ -1,6 +1,7 @@
 import { ActionTypes } from '../constants/actionTypes';
 let initialState = {
     profile: null,
+    profiles: null,
     loading: true
 }
 
@@ -15,6 +16,12 @@ export const profileReducer = (state = initialState, { type, payload })=> {
             return {
                 ...state,
                 profile: payload,
+                loading: false
+            } 
+        case ActionTypes.GET_PROFILES:
+            return {
+                ...state,
+                profiles: payload,
                 loading: false
             } 
         case ActionTypes.CLEAR_CURRENT_PROFILE:

@@ -14,7 +14,7 @@ router.get('/handle/:handle', (req, res)=> {
     .then((profile)=> {
         if (!profile) {
             errors.noprofile = "There is no profile for this user";
-            res.status(404).json(errors);
+            return res.status(404).json(errors);
         }
         res.json(profile)
     })
@@ -29,7 +29,7 @@ router.get('/user/:id', (req, res)=> {
     .then((profile)=> {
         if (!profile) {
             errors.noprofile = "There is no profile";
-            res.status(404).json(errors);
+            return res.status(404).json(errors);
         }
         res.json(profile)
     })
@@ -45,7 +45,7 @@ router.get('/all', (req, res)=> {
     .then((profiles)=> {
         if (!profiles) {
             errors.noprofile = "There are no profiles";
-            res.status(404).json(errors);
+            return res.status(404).json(errors);
         }
         res.json(profiles)
     })
@@ -61,7 +61,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
     .then((profile)=> {
         if (!profile) {
             errors.noprofile = 'There is no profile for this user';
-            
             return res.status(404).json(errors);
         }
         res.json(profile);
