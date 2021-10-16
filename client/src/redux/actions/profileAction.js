@@ -53,7 +53,6 @@ export const addExperience = (expData, history) => (dispatch) => {
     .post(process.env.REACT_APP_EXPERIENCE_ENDPOINT, expData)
     .then(() => history.push("/dashboard"))
     .catch((err) => {
-		console.log(err.response.data)
       dispatch({
         type: ActionTypes.GET_ERRORS,
         payload: err.response.data,
