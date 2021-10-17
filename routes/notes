@@ -1,1 +1,3 @@
-update profile => check handle again
+- fix avatar
+- fix edit profile when make a field empty does not change
+

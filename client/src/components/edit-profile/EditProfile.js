@@ -66,34 +66,33 @@ const  EditProfile = () => {
 				youtube: exProfile.youtube,
 				instagram: exProfile.instagram
 			})
-
 	}
 	}, [profile.profile])
 	
 	const onSubmit = (e) =>{
 		e.preventDefault();
-
+    
 		const profileData = {
-			handle: allValues.handle,
-			company: allValues.company,
-			website: allValues.website,
-			location: allValues.location,
-			status: allValues.status,
-			skills: allValues.skills,
-			githubusername: allValues.githubusername,
-			bio: allValues.bio,
-			twitter: allValues.twitter,
-			facebook: allValues.facebook,
-			linkedin: allValues.linkedin,
-			youtube: allValues.youtube,
-			instagram: allValues.instagram
+      handle: allValues.handle,
+      company: allValues.company,
+      website: allValues.website,
+      location: allValues.location,
+      status: allValues.status,
+      skills: allValues.skills,
+      githubusername: allValues.githubusername,
+      bio: allValues.bio,
+      twitter: allValues.twitter,
+      facebook: allValues.facebook,
+      linkedin: allValues.linkedin,
+      youtube: allValues.youtube,
+      instagram: allValues.instagram
 		};
 		dispatch(createProfile(profileData, history));
   }
 
-  const onChange = (e) =>{
-    setallValues({ ...allValues, [e.target.name]: e.target.value });
-  }
+	const onChange = (e) =>{
+			setallValues({ ...allValues, [e.target.name]: e.target.value });
+	}
 
 
     let socialInputs;

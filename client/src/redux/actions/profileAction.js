@@ -75,38 +75,42 @@ export const addEducation = (expData, history) => (dispatch) => {
 
 // DELETE EXPERIENCE
 export const deleteExperience = (id) => (dispatch) => {
-	if (window.confirm("Are you sure, You want delete the item ?")) {
-	  axios
-		.delete(process.env.REACT_APP_EXPERIENCE_ENDPOINT + `/${id}`)
-		.then((res) => dispatch({
-		  type: ActionTypes.GET_PROFILE,
-		  payload: res.data
-		}))
-		.catch((err) => {
-		  dispatch({
-			type: ActionTypes.GET_PROFILE,
-			payload: err.response.data
-		  });
-		});
-	}
-  };
+  if (window.confirm("Are you sure, You want delete the item ?")) {
+    axios
+      .delete(process.env.REACT_APP_EXPERIENCE_ENDPOINT + `/${id}`)
+      .then((res) =>
+        dispatch({
+          type: ActionTypes.GET_PROFILE,
+          payload: res.data,
+        })
+      )
+      .catch((err) => {
+        dispatch({
+          type: ActionTypes.GET_PROFILE,
+          payload: err.response.data,
+        });
+      });
+  }
+};
 
 // DELETE EDUCATION
 export const deleteEducation = (id) => (dispatch) => {
-	if (window.confirm("Are you sure, You want delete the item ?")) {
-		axios
-		.delete(process.env.REACT_APP_EDUCATION_ENDPOINT + `/${id}`)
-		.then((res) => dispatch({
-			type: ActionTypes.GET_PROFILE,
-			payload: res.data
-		}))
-		.catch((err) => {
-			dispatch({
-			type: ActionTypes.GET_PROFILE,
-			payload: err.response.data
-			});
-		});
-	}
+  if (window.confirm("Are you sure, You want delete the item ?")) {
+    axios
+      .delete(process.env.REACT_APP_EDUCATION_ENDPOINT + `/${id}`)
+      .then((res) =>
+        dispatch({
+          type: ActionTypes.GET_PROFILE,
+          payload: res.data,
+        })
+      )
+      .catch((err) => {
+        dispatch({
+          type: ActionTypes.GET_PROFILE,
+          payload: err.response.data,
+        });
+      });
+  }
 };
 
 // DELETE ACCOUNT
@@ -143,6 +147,25 @@ export const getProfiles = () => (dispatch) => {
     .catch(() => {
       dispatch({
         type: ActionTypes.GET_PROFILES,
+        payload: {},
+      });
+    });
+};
+
+// GET PROFILE BY HANDLE
+export const getProfileByHandle = (handle) => (dispatch) => {
+  dispatch(setProfileLoading());
+  axios
+    .get(process.env.REACT_APP_PROFILE_BYHANDLE_ENDPOINT + `/${handle}`)
+    .then((res) => {
+      dispatch({
+        type: ActionTypes.GET_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ActionTypes.GET_PROFILE,
         payload: {},
       });
     });

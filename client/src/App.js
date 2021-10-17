@@ -17,7 +17,8 @@ import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-experience-education/add-experience';
 import AddEducation from './components/add-experience-education/add-education';
-import Profiles from './components/profiles/Profiles'
+import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile'
 
 function App() {
 	const  history = useHistory();
@@ -36,7 +37,7 @@ function App() {
 			// Log out user
 			store.dispatch(logoutUser());
 	 		// Redirect to Login
-			if (history !== 'undefined')
+			if (history !== undefined )
 				history.push('/login');
 		}
 	}
@@ -47,6 +48,7 @@ function App() {
 						<NavBar />
 						<Route exact path="/"><Landing /></Route>
 						<Route exact path="/profiles"><Profiles /></Route>
+						<Route exact path="/profile/:handle"><Profile /></Route>
 						<div className="container">
 							<Route  exact path="/Login"><Login /></Route>
 							<Route  exact path="/Register"><Register /></Route>

@@ -6,7 +6,6 @@ import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import { createProfile } from '../../redux/actions/profileAction';
 import { useHistory } from 'react-router';
-// import setAuthToken from '../../utils/setAuthToken';
 
 const  CreateProfile = () => {
     const [allValues, setallValues] = useState({

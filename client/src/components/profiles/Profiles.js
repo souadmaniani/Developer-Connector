@@ -20,7 +20,7 @@ const Profiles = () => {
     else if (Object.keys(profiles).length > 0) {
         profileItems = (
           profiles.map((profile) => {
-            return <ProfileItem profile={profile} />
+            return <ProfileItem key={profile._id} profile={profile} />
           })
         )
     }
