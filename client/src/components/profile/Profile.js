@@ -5,7 +5,7 @@ import ProfileAbout from './ProfileAbout';
 import ProfileCred from './ProfileCred';
 import ProfileGithub from './ProfileGithub';
 import { getProfileByHandle } from '../../redux/actions/profileAction'
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 import { Link } from 'react-router-dom';
 
@@ -14,12 +14,14 @@ const Profile = () => {
 	const { profile, loading } = state.profile;
 	const dispatch = useDispatch();
 	const { handle } = useParams();
+	const history = useHistory();
+	let profileContent;
 
 	useEffect(() => {
 		dispatch(getProfileByHandle(handle))
-	}, [handle]);
-	let profileContent;
-
+	}, [handle, dispatch]);
+	if (profile === null && loading)
+		history.push('/not-found');
 	if (profile === null || loading) {
 		profileContent = <Spinner />;
 	} else {

@@ -3,7 +3,6 @@ const validator = require('validator')
 
 module.exports = validatePostInput = (data) => {
     const errors ={};
-
     data.text = isEmpty(data.text) ? '' : data.text;
     
     if (!validator.isLength(data.text, {min: 10, max: 300}))

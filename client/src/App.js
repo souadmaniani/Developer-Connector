@@ -18,7 +18,9 @@ import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-experience-education/add-experience';
 import AddEducation from './components/add-experience-education/add-education';
 import Profiles from './components/profiles/Profiles';
-import Profile from './components/profile/Profile'
+import Profile from './components/profile/Profile';
+import NotFound from './components/not-found/NotFound'
+import Posts from './components/posts/Posts';
 
 function App() {
 	const  history = useHistory();
@@ -68,6 +70,10 @@ function App() {
 						<Switch>
 							<PrivateRoute exact path="/add-education" component={AddEducation} />
 						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/feed" component={Posts} />
+						</Switch>
+						<Route exact path="/not-found"><NotFound /></Route>
 					</div>
 					<Footer />
 			</Router>

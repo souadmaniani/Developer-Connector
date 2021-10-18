@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 const ProfileGithub = ({ githubusername }) => {
   const [githubValues, setgithubValues] = useState({
@@ -9,21 +8,21 @@ const ProfileGithub = ({ githubusername }) => {
     sort: "created:asc",
     repos: {},
   });
+
   useEffect(() => {
     const { clientId, clientSecret, count, sort } = githubValues;
-    console.log(
-      process.env.REACT_APP_GITHUB_ENDPOINT +
-        `${githubusername}/repos?per_page=${count}&&sort=${sort}&&client_id=${clientId}&&client_secret=${clientSecret}`
-    );
     fetch(
       process.env.REACT_APP_GITHUB_ENDPOINT +
         `${githubusername}/repos?per_page=${count}&&sort=${sort}&&client_id=${clientId}&&client_secret=${clientSecret}`
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setgithubValues({ ...githubValues, repos: data });
       });
+
+    return () => {
+      setgithubValues({});
+    };
   }, []);
 
   const { repos } = githubValues;
@@ -32,9 +31,9 @@ const ProfileGithub = ({ githubusername }) => {
       <div className="row">
         <div className="col-md-6">
           <h4>
-            <Link to={repos[repoKey].html_url} className="text-info">
+            <a href={repos[repoKey].html_url} className="text-info">
               {repos[repoKey].name}
-            </Link>
+            </a>
           </h4>
           <p>{repos[repoKey].description}</p>
         </div>

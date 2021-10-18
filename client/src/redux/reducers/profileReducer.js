@@ -34,7 +34,6 @@ export const profileReducer = (state = initialState, { type, payload })=> {
                 ...state,
                 profile: payload
             }
-        
         // case ActionTypes.PROFILE_NOT_FOUND:
         //     return {
         //         ...state,
