@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PostForm from "./PostForm";
 import PostFeed from "./PostFeed";
 import { getPosts } from "../../redux/actions/postAction";
-import Spinner from '../common/Spinner'
+import Spinner from "../common/Spinner";
 
 const Posts = () => {
   const { posts, loading } = useSelector((state) => state.post);
@@ -13,6 +13,7 @@ const Posts = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+  
   if (posts === null || loading) {
     postContent = <Spinner />;
   } else {

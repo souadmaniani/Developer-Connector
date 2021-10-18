@@ -3,6 +3,8 @@ import axios from "axios";
 
 // ADD POST
 export const addPost = (postData) => (dispatch) => {
+  dispatch(clearErrors());
+
   axios
     .post(process.env.REACT_APP_POST_ENDPOINT, postData)
     .then((res) =>
@@ -26,6 +28,24 @@ export const getPosts = () => (dispatch) => {
     .then((res) =>
       dispatch({
         type: ActionTypes.GET_POSTS,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch({
+        type: ActionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// GET POST
+export const getPost = (postId) => (dispatch) => {
+  axios
+    .get(process.env.REACT_APP_POST_ENDPOINT + `/${postId}`)
+    .then((res) =>
+      dispatch({
+        type: ActionTypes.GET_POST,
         payload: res.data,
       })
     )
@@ -64,7 +84,6 @@ export const deletePost = (postId) => (dispatch) => {
 
 // LIKE POST
 export const likePost = (postId) => (dispatch) => {
-  console.log(process.env.REACT_APP_POST_ENDPOINT + `/like/${postId}`);
   axios
     .post(process.env.REACT_APP_POST_ENDPOINT + `/like/${postId}`)
     .then(() => dispatch(getPosts()))
@@ -86,4 +105,42 @@ export const unlikePost = (postId) => (dispatch) => {
         payload: err.response.data,
       })
     );
+};
+
+// ADD COMMENT
+export const addComment = (commentData, postId) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .post(
+      process.env.REACT_APP_POST_ENDPOINT + `/comment/${postId}`,
+      commentData
+    )
+    .then(() => dispatch(getPost(postId)))
+    .catch((err) =>
+      dispatch({
+        type: ActionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// DELETE COMMENT
+export const deleteComment = (postId, commentId) => (dispatch) => {
+  axios
+    .delete(
+      process.env.REACT_APP_POST_ENDPOINT + `/comment/${postId}/${commentId}`
+    )
+    .then(() => dispatch(getPost(postId)))
+    .catch((err) =>
+      dispatch({
+        type: ActionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+export const clearErrors = () => {
+  return {
+    type: ActionTypes.CLEAR_ERRORS,
+  };
 };

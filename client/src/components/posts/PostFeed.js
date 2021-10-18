@@ -5,7 +5,7 @@ const PostFeed = ({ posts }) => {
   return (
     <div>
       {posts.map((post) => {
-        return <PostItem key={post._id} post={post} />;
+        return <PostItem key={post._id} post={post}  showActions={true} />;
       })}
     </div>
   );

@@ -126,13 +126,14 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { errors, isValid } = validatePostInput(req.body);
+    
     if (!isValid) return res.status(404).json(errors);
     Post.findById({ _id: req.params.id })
-      .then((post) => {
+      .then((post) => { 
         const newComment = {
           user: req.user.id,
           text: req.body.text,
-          username: req.body.username,
+          name: req.body.name,
           avatar: req.body.avatar,
         };
         // Add comment to array
@@ -140,7 +141,8 @@ router.post(
         // Save post
         post
           .save()
-          .then((post) => res.json(post))
+          .then((post) => {
+            res.json(post)})
           .catch((err) => res.status(404).json(err));
       })
       .catch(() => res.status(404).json({ nopostfound: "post not found" }));

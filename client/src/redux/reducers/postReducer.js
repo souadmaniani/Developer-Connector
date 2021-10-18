@@ -24,12 +24,12 @@ export const postReducer = (state = initialState, { type, payload }) => {
         posts: payload,
         loading: false,
       };
-    // case ActionTypes.GET_POST:
-    //   return {
-    //     ...state,
-    //     post: payload,
-    //     loading: false,
-    //   };
+    case ActionTypes.GET_POST:
+      return {
+        ...state,
+        post: payload,
+        loading: false,
+      };
     case ActionTypes.DELETE_POST:
       return {
         ...state,

@@ -185,7 +185,6 @@ router.delete('/experience/:exp_id',  passport.authenticate('jwt', {session: fal
             // Get remove index
             const removeIndex = profile.experience.findIndex((elem) => elem._id.toString() === req.params.exp_id);
             // Delete Experience
-            console.log(removeIndex);
             profile.experience.splice(removeIndex, 1);
             // Profile Save
             profile.save().then((profile)=> res.json(profile))

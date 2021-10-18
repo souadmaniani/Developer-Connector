@@ -9,7 +9,7 @@ const PostSchema = new Schema({
         type: String,
         required: true
     },
-    username: {
+    name: {
         type: String
     },
     avatar: {
@@ -33,7 +33,7 @@ const PostSchema = new Schema({
                 type: String,
                 required: true
             },
-            username: {
+            name: {
                 type: String
             },
             avatar: {
