@@ -29,6 +29,15 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
+// check if we r on heroku
+if (process.env.NODE_ENV == "production") {
+  // serve static folder
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    // for any route load the react index html file
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const port = process.env.port || 5000;
 
