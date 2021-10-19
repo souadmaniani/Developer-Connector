@@ -6,6 +6,7 @@ const posts = require("./routes/api/posts");
 const passport = require("passport");
 const cors = require("cors");
 const app = express();
+const path = require('path');
 
 // DB config
 const db = require("./config/keys").mongoURI;
