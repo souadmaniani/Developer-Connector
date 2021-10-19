@@ -2,30 +2,40 @@ import React, { useState, useEffect } from "react";
 
 const ProfileGithub = ({ githubusername }) => {
   const [githubValues, setgithubValues] = useState({
-    clientId: "ec33327e89a3ba2e01a9",
-    clientSecret: "bca84dac0132a4a635e99ee1a89eebaf94d9c1b6",
+    clientId: "4059dd1cf08c97d3d440",
+    clientSecret: "0063bb97da03fc11ead24fba57368f21c2f3759b",
     count: 5,
     sort: "created:asc",
     repos: {},
   });
 
+  const { clientId, clientSecret, count, sort } = githubValues;
   useEffect(() => {
-    const { clientId, clientSecret, count, sort } = githubValues;
-    fetch(
-      process.env.REACT_APP_GITHUB_ENDPOINT +
-        `${githubusername}/repos?per_page=${count}&&sort=${sort}&&client_id=${clientId}&&client_secret=${clientSecret}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setgithubValues({ ...githubValues, repos: data });
-      });
+    let isMounted = true;
+    const fetchGithubRepos = () => {
+      fetch(
+        process.env.REACT_APP_GITHUB_ENDPOINT +
+          `${githubusername}/repos?per_page=${count}&&sort=${sort}&&client_id=${clientId}&&client_secret=${clientSecret}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          return isMounted
+            ? setgithubValues((prevgithubValues) => ({
+                ...prevgithubValues,
+                repos: data,
+              }))
+            : null;
+        });
+    };
+    fetchGithubRepos();
 
     return () => {
-      setgithubValues({});
+      isMounted = false;
     };
-  }, []);
+  }, [githubusername, clientId, clientSecret, count, sort]);
 
   const { repos } = githubValues;
+
   const repoItems = Object.keys(repos).map((repoKey) => (
     <div key={repos[repoKey].id} className="card card-body mb-2">
       <div className="row">
