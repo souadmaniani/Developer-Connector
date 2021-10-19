@@ -6,7 +6,7 @@ const posts = require("./routes/api/posts");
 const passport = require("passport");
 const cors = require("cors");
 const app = express();
-const path = require('path');
+const path = require("path");
 
 // DB config
 const db = require("./config/keys").mongoURI;
@@ -31,7 +31,7 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
 // check if we r on heroku
-if (process.env.NODE_ENV == "production") {
+if (process.env.NODE_ENV === "production") {
   // serve static folder
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
