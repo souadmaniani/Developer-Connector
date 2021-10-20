@@ -1,1 +1,0 @@
-"dev": "concurrently \"npm run server\" \"npm run client\"",
