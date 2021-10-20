@@ -1,1 +1,1 @@
-worker: node server.js
+"dev": "concurrently \"npm run server\" \"npm run client\"",

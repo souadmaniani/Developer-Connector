@@ -26,7 +26,7 @@ const Landing = () => {
                             <Link to="/Register" className="btn btn-lg btn-info mr-2">
                             Sign Up
                             </Link>
-                            <Link href="/Login" className="btn btn-lg btn-light">
+                            <Link to="/Login" className="btn btn-lg btn-light">
                             Login
                             </Link>
                         </div>
