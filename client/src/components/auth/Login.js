@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { loginUser } from "../../redux/actions/authAction";
+import { clearErrors, loginUser } from "../../redux/actions/authAction";
 import TextFieldGroup from "../common/TextFieldGroup";
 
 const Login = () => {
@@ -11,7 +11,6 @@ const Login = () => {
   const [allValues, setAllValues] = useState({
     email: "",
     password: "",
-    // errors: {}
   });
   const onChange = (e) => {
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
@@ -24,6 +23,11 @@ const Login = () => {
     };
     dispatch(loginUser(user));
   };
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, []);
+
   useEffect(() => {
     if (auth.isAuthentified) history.push("/dashboard");
   }, [auth.isAuthentified, history]);

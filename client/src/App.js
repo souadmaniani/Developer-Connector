@@ -29,12 +29,6 @@ import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
 
 function App() {
-  if (process.env.NODE_ENV === "production") {
-    process.env.SERVER_URL =
-      "https://salty-bayou-79947.herokuapp.com";
-  } else process.env.SERVER_URL = "http://localhost:5000";
-  console.log(process.env.SERVER_URL);
-
   const history = useHistory();
   // Check for token
   if (localStorage.jwttoken) {
